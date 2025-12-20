@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle } from 'lucide-react';
+import WhatsAppIcon from '../Icons/WhatsAppIcon';
 import { WHATSAPP_NUMBER } from '../../constants';
 
 const StickyWhatsApp: React.FC = () => {
@@ -13,7 +13,7 @@ const StickyWhatsApp: React.FC = () => {
       className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-3 rounded-full shadow-lg transition-transform hover:scale-105 animate-bounce-subtle"
       aria-label="Chat on WhatsApp"
     >
-      <MessageCircle size={24} />
+      <WhatsAppIcon size={24} />
       <span className="font-semibold hidden sm:inline">Chat with us</span>
     </button>
   );

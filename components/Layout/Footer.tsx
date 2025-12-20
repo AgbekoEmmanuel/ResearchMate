@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ExternalLink } from 'lucide-react';
+import WhatsAppIcon from '../Icons/WhatsAppIcon';
 import { WHATSAPP_DISPLAY, EMAIL_CONTACT, WHATSAPP_NUMBER } from '../../constants';
 
 const Footer: React.FC = () => {
@@ -38,7 +39,7 @@ const Footer: React.FC = () => {
             <h4 className="text-white font-semibold mb-4 font-heading">Contact Us</h4>
             <ul className="space-y-4 text-sm">
               <li className="flex items-center gap-3">
-                <Phone size={18} className="text-brand-500" />
+                <WhatsAppIcon size={18} className="text-brand-500" />
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-white transition-colors">{WHATSAPP_DISPLAY}</a>
               </li>
               <li className="flex items-center gap-3">

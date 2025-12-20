@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
+import WhatsAppIcon from '../components/Icons/WhatsAppIcon';
 import { WHATSAPP_NUMBER } from '../constants';
 
 const About: React.FC = () => {
@@ -35,11 +36,11 @@ const About: React.FC = () => {
             </ul>
           </div>
           <div>
-             <img 
-               src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
-               alt="Team working" 
-               className="rounded-xl shadow-lg"
-             />
+            <img
+              src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+              alt="Team working"
+              className="rounded-xl shadow-lg"
+            />
           </div>
         </div>
       </section>
@@ -48,39 +49,39 @@ const About: React.FC = () => {
       <section className="bg-white py-16 border-t border-gray-100">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-dark-900 mb-12">Our Process</h2>
-          
+
           <div className="relative">
             {/* Line */}
             <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-brand-100"></div>
 
             <div className="space-y-12">
-              <TimelineItem 
-                number="1" 
-                title="Submit Your Request" 
+              <TimelineItem
+                number="1"
+                title="Submit Your Request"
                 text="Fill out our form or chat on WhatsApp with your project details, files, and deadline."
                 align="left"
               />
-              <TimelineItem 
-                number="2" 
-                title="Get a Quote" 
+              <TimelineItem
+                number="2"
+                title="Send Request"
                 text="We review your requirements and provide a fair quote and delivery timeline."
                 align="right"
               />
-              <TimelineItem 
-                number="3" 
-                title="Confirmation" 
+              <TimelineItem
+                number="3"
+                title="Confirmation"
                 text="Make a part payment (Mobile Money or Bank) to start the work."
                 align="left"
               />
-              <TimelineItem 
-                number="4" 
-                title="Drafts & Updates" 
+              <TimelineItem
+                number="4"
+                title="Drafts & Updates"
                 text="Receive progress updates and drafts for your review and feedback."
                 align="right"
               />
-              <TimelineItem 
-                number="5" 
-                title="Final Delivery" 
+              <TimelineItem
+                number="5"
+                title="Final Delivery"
                 text="Receive the final polished work. We offer after-support for any minor corrections."
                 align="left"
               />
@@ -88,10 +89,11 @@ const About: React.FC = () => {
           </div>
 
           <div className="text-center mt-12">
-            <button 
+            <button
               onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank')}
-              className="bg-brand-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-brand-700 transition-colors"
+              className="bg-brand-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-brand-700 transition-colors inline-flex items-center gap-2"
             >
+              <WhatsAppIcon size={20} />
               Start The Process Now
             </button>
           </div>

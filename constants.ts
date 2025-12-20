@@ -2,7 +2,7 @@ import { Testimonial, FaqItem, ServiceItem } from './types';
 
 export const WHATSAPP_NUMBER = "233548475117";
 export const WHATSAPP_DISPLAY = "+233 54 8475 117";
-export const EMAIL_CONTACT = "support@researchmate.com"; // Placeholder
+export const EMAIL_CONTACT = "support@researchmate.help";
 
 export const SERVICES: ServiceItem[] = [
   {

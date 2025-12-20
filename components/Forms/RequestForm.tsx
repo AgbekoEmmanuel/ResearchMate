@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import WhatsAppIcon from '../../components/Icons/WhatsAppIcon';
 import { AcademicLevel, ServiceCategory, FormState } from '../../types';
 import { WHATSAPP_NUMBER } from '../../constants';
 
@@ -34,14 +35,36 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    
-    // Simulate backend call
-    setTimeout(() => {
-      setStatus('success');
-    }, 1500);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "29a8f671-0a27-4c8e-87af-e5b8f1cdce97",
+          subject: `New Request: ${formData.serviceType} - ${formData.fullName}`,
+          from_name: "Research Mate Website",
+          ...formData,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error("Error submitting form", error);
+      setStatus('error');
+    }
   };
 
   const sendToWhatsApp = () => {
@@ -52,7 +75,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
       `*Deadline:* ${formData.deadline}%0A` +
       `*Details:* ${formData.description}%0A` +
       `*Institution:* ${formData.institution}`;
-    
+
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
   };
 
@@ -66,11 +89,11 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
         <p className="text-green-700 mb-6">
           Thank you, {formData.fullName}. We have received your details. A member of our team will review it and contact you shortly.
         </p>
-        <button 
+        <button
           onClick={sendToWhatsApp}
           className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors inline-flex items-center gap-2"
         >
-          <Send size={18} />
+          <WhatsAppIcon size={18} />
           Follow up on WhatsApp
         </button>
       </div>
@@ -89,8 +112,8 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             name="fullName"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
@@ -101,8 +124,8 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number *</label>
-          <input 
-            type="tel" 
+          <input
+            type="tel"
             name="whatsapp"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
@@ -116,8 +139,8 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
       {isDetailed && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Email Address (Optional)</label>
-          <input 
-            type="email" 
+          <input
+            type="email"
             name="email"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
             value={formData.email}
@@ -130,7 +153,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Academic Level *</label>
-          <select 
+          <select
             name="level"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-white"
             value={formData.level}
@@ -143,8 +166,8 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Institution/University</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             name="institution"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
             value={formData.institution}
@@ -157,7 +180,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Service Type *</label>
-          <select 
+          <select
             name="serviceType"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-white"
             value={formData.serviceType}
@@ -170,8 +193,8 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Deadline *</label>
-          <input 
-            type="date" 
+          <input
+            type="date"
             name="deadline"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
@@ -183,7 +206,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Project Details / Instructions *</label>
-        <textarea 
+        <textarea
           name="description"
           required
           rows={4}
@@ -198,8 +221,8 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Upload Files (Instructions, Rubric, Data)</label>
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:bg-gray-50 transition-colors">
-            <input 
-              type="file" 
+            <input
+              type="file"
               name="files"
               multiple
               onChange={handleFileChange}
@@ -216,14 +239,14 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
         </div>
       )}
 
-      <button 
-        type="submit" 
+      <button
+        type="submit"
         disabled={status === 'submitting'}
         className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors disabled:opacity-70 disabled:cursor-not-allowed text-lg"
       >
-        {status === 'submitting' ? 'Sending Request...' : 'Get a Quote'}
+        {status === 'submitting' ? 'Sending Request...' : 'Send Request'}
       </button>
-      
+
       <p className="text-xs text-gray-500 text-center mt-2">
         We respect your privacy. Your academic work remains confidential.
       </p>
