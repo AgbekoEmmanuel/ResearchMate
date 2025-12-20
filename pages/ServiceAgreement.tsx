@@ -11,7 +11,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 const ServiceAgreement: React.FC = () => {
-    const pdfUrl = "/RESEARCHMATE_SERVICE_AGREEMENT.pdf";
+    const pdfUrl = "/logos/RESEARCHMATE_SERVICE_AGREEMENT.pdf";
     const [numPages, setNumPages] = useState<number | null>(null);
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageWidth, setPageWidth] = useState<number>(800);
