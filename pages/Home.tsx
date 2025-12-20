@@ -1,10 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, BarChart2, CheckSquare, Presentation, Clock, ShieldCheck, DollarSign, Award, ArrowRight } from 'lucide-react';
 import RequestForm from '../components/Forms/RequestForm';
 import { WHATSAPP_NUMBER } from '../constants';
 
 const Home: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   const scrollToForm = () => {
     const element = document.getElementById('home-quote-form');
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -26,7 +39,7 @@ const Home: React.FC = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            
+
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-900 leading-tight mb-6">
               Need Help With Your <span className="text-brand-600">Research</span> or <span className="text-brand-600">Assignments</span>?

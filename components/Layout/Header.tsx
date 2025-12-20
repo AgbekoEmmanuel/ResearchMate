@@ -73,6 +73,12 @@ const Header: React.FC = () => {
               );
             })}
             <Link
+              to="/service-agreement"
+              className={`text-sm font-medium transition-colors ${isActive('/service-agreement')}`}
+            >
+              Service Agreement
+            </Link>
+            <Link
               to="/contact"
               className="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm"
             >
@@ -110,6 +116,13 @@ const Header: React.FC = () => {
               className="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50"
             >
               Custom Request
+            </Link>
+            <Link
+              to="/service-agreement"
+              onClick={closeMenu}
+              className={`block px-3 py-3 text-base font-medium rounded-md ${location.pathname === '/service-agreement' ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50'}`}
+            >
+              Service Agreement
             </Link>
             <div className="pt-4 px-3">
               <Link

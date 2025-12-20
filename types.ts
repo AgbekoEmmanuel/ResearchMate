@@ -47,5 +47,5 @@ export interface FormState {
   serviceType: string;
   deadline: string;
   description: string;
-  files: FileList | null;
+
 }

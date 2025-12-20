@@ -1,9 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
-import WhatsAppIcon from '../components/Icons/WhatsAppIcon';
-import { WHATSAPP_NUMBER } from '../constants';
 
 const About: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="pb-20">
       {/* Header */}
@@ -90,10 +90,10 @@ const About: React.FC = () => {
 
           <div className="text-center mt-12">
             <button
-              onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank')}
+              onClick={() => navigate('/#home-quote-form')}
               className="bg-brand-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-brand-700 transition-colors inline-flex items-center gap-2"
             >
-              <WhatsAppIcon size={20} />
+              <CheckCircle size={20} />
               Start The Process Now
             </button>
           </div>

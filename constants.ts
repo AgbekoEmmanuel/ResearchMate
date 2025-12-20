@@ -23,7 +23,7 @@ export const SERVICES: ServiceItem[] = [
   },
   {
     id: 'data-analysis',
-    title: "Data Analysis (SPSS, STATA, Python)",
+    title: "Data Analysis (SPSS, STATA, Python, Excel, R, PowerBI, Tableau etc)",
     description: "Quantitative and qualitative analysis including cleaning, coding, and interpretation.",
     deliverables: ["Analysis output", "Tables & Charts", "Interpretation report", "Other related services"],
     timeline: "Subject to discussion",

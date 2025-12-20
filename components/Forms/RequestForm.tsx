@@ -19,20 +19,13 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
     institution: '',
     serviceType: initialService || ServiceCategory.ResearchProject,
     deadline: '',
-    description: '',
-    files: null
+    description: ''
   });
 
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFormData({ ...formData, files: e.target.files });
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -111,7 +104,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name <span className="text-red-500">*</span></label>
           <input
             type="text"
             name="fullName"
@@ -123,7 +116,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number <span className="text-red-500">*</span></label>
           <input
             type="tel"
             name="whatsapp"
@@ -152,7 +145,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Academic Level *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Academic Level <span className="text-red-500">*</span></label>
           <select
             name="level"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-white"
@@ -179,7 +172,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Service Type *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Service Type <span className="text-red-500">*</span></label>
           <select
             name="serviceType"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-white"
@@ -192,11 +185,10 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Deadline *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Deadline (Optional)</label>
           <input
             type="date"
             name="deadline"
-            required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
             value={formData.deadline}
             onChange={handleChange}
@@ -205,7 +197,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Project Details / Instructions *</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Project Details / Instructions <span className="text-red-500">*</span></label>
         <textarea
           name="description"
           required
@@ -217,27 +209,6 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
         ></textarea>
       </div>
 
-      {isDetailed && (
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Upload Files (Instructions, Rubric, Data)</label>
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:bg-gray-50 transition-colors">
-            <input
-              type="file"
-              name="files"
-              multiple
-              onChange={handleFileChange}
-              className="block w-full text-sm text-slate-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:border-0
-                file:text-sm file:font-semibold
-                file:bg-brand-50 file:text-brand-700
-                hover:file:bg-brand-100
-              "
-            />
-            <p className="text-xs text-gray-500 mt-2">PDF, DOCX, CSV, XLSX (Max 5MB)</p>
-          </div>
-        </div>
-      )}
 
       <button
         type="submit"

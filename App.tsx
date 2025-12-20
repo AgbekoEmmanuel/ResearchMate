@@ -10,6 +10,7 @@ import CustomRequest from './pages/CustomRequest';
 import About from './pages/About';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
+import ServiceAgreement from './pages/ServiceAgreement';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -35,6 +36,7 @@ const App: React.FC = () => {
             <Route path="/about" element={<About />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/service-agreement" element={<ServiceAgreement />} />
           </Routes>
         </main>
         <Footer />
