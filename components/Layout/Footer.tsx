@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-3">
                 <MapPin size={18} className="text-brand-500" />
-                <span>Accra, Ghana (Online Service)</span>
+                <span>Accra, Ghana</span>
               </li>
             </ul>
           </div>
