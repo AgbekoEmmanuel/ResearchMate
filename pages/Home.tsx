@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, BarChart2, CheckSquare, Presentation, Clock, ShieldCheck, DollarSign, Award, ArrowRight, Globe } from 'lucide-react';
 import RequestForm from '../components/Forms/RequestForm';
 import ReviewsSection from '../components/ReviewsSection';
+import StarBorder from '../components/StarBorder';
 import { WHATSAPP_NUMBER } from '../constants';
 
 const Home: React.FC = () => {
@@ -88,18 +89,49 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Levels Banner */}
-      <section className="bg-dark-900 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center md:justify-between items-center gap-6 text-gray-300 font-medium">
-            <span className="text-white font-bold uppercase tracking-wider text-sm md:text-base border-b-2 border-brand-500 pb-1">We Support:</span>
-            <span>Diploma</span>
-            <span className="hidden md:block text-brand-500">•</span>
-            <span>Undergraduate</span>
-            <span className="hidden md:block text-brand-500">•</span>
-            <span>Masters (MSc/MBA/MPhil)</span>
-            <span className="hidden md:block text-brand-500">•</span>
-            <span>PhD</span>
+      {/* Levels Banner — infinite marquee */}
+      <section className="bg-dark-900 py-5 overflow-hidden">
+        <style>{`
+          @keyframes marquee-left {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee-left 14s linear infinite;
+          }
+          .marquee-track:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+
+        <div className="flex items-center">
+          {/* Static label — never scrolls */}
+          <div className="flex-shrink-0 px-6 border-r border-gray-600 mr-4 z-10 bg-dark-900">
+            <span className="text-white font-bold uppercase tracking-wider text-sm md:text-base border-b-2 border-brand-500 pb-1 whitespace-nowrap">
+              We Support:
+            </span>
+          </div>
+
+          {/* Scrolling ticker — clip overflow on the right */}
+          <div className="flex-1 overflow-hidden">
+            <div className="marquee-track">
+              {/* First set */}
+              {['Diploma', 'Undergraduate', 'Masters (MSc/MBA/MPhil)', 'PhD', 'Diploma', 'Undergraduate', 'Masters (MSc/MBA/MPhil)', 'PhD'].map((level, i) => (
+                <span key={`a-${i}`} className="flex items-center gap-6 text-gray-300 font-medium text-sm md:text-base px-6 whitespace-nowrap">
+                  {level}
+                  <span className="text-brand-500 text-lg">•</span>
+                </span>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {['Diploma', 'Undergraduate', 'Masters (MSc/MBA/MPhil)', 'PhD', 'Diploma', 'Undergraduate', 'Masters (MSc/MBA/MPhil)', 'PhD'].map((level, i) => (
+                <span key={`b-${i}`} className="flex items-center gap-6 text-gray-300 font-medium text-sm md:text-base px-6 whitespace-nowrap">
+                  {level}
+                  <span className="text-brand-500 text-lg">•</span>
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -267,16 +299,35 @@ const Home: React.FC = () => {
 };
 
 const ServiceCard: React.FC<{ icon: React.ReactNode, title: string, description: string, link: string }> = ({ icon, title, description, link }) => (
-  <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
-    <div className="mb-4 p-3 bg-brand-50 rounded-lg w-fit group-hover:bg-brand-100 transition-colors">
-      {icon}
+  <StarBorder
+    as="div"
+    color="#00acc1"
+    speed="5s"
+    thickness={1.5}
+    className="group"
+  >
+    <div className="p-8">
+      <div
+        className="mb-5 w-14 h-14 flex items-center justify-center rounded-2xl transition-all duration-300"
+        style={{
+          background: 'linear-gradient(135deg, rgba(43,177,176,0.22) 0%, rgba(0,172,193,0.10) 100%)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          border: '1px solid rgba(43,177,176,0.30)',
+          boxShadow: '0 2px 8px rgba(43,177,176,0.08), inset 0 1px 0 rgba(255,255,255,0.55)',
+        }}
+      >
+        <span className="group-hover:scale-110 transition-transform duration-300 inline-flex">
+          {icon}
+        </span>
+      </div>
+      <h3 className="text-xl font-bold text-dark-900 mb-3">{title}</h3>
+      <p className="text-gray-600 mb-4 leading-relaxed">{description}</p>
+      <Link to={link} className="text-brand-600 font-medium hover:text-brand-800 text-sm flex items-center gap-1">
+        Learn more <ArrowRight size={16} />
+      </Link>
     </div>
-    <h3 className="text-xl font-bold text-dark-900 mb-3">{title}</h3>
-    <p className="text-gray-600 mb-4 leading-relaxed">{description}</p>
-    <Link to={link} className="text-brand-600 font-medium hover:text-brand-800 text-sm flex items-center gap-1">
-      Learn more <ArrowRight size={16} />
-    </Link>
-  </div>
+  </StarBorder>
 );
 
 const FeatureItem: React.FC<{ icon: React.ReactNode, title: string, text: string }> = ({ icon, title, text }) => (
