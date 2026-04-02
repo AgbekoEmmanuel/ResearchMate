@@ -112,7 +112,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
             value={formData.fullName}
             onChange={handleChange}
-            placeholder="John Doe"
+            placeholder="Enter your full name"
           />
         </div>
         <div>
@@ -165,7 +165,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ initialService, isDetailed = 
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
             value={formData.institution}
             onChange={handleChange}
-            placeholder="e.g. UG, KNUST, UPSA"
+            placeholder="e.g. UG, KNUST, Harvard, Cambridge, etc."
           />
         </div>
       </div>

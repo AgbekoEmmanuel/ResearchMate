@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, BarChart2, CheckSquare, Presentation, Clock, ShieldCheck, DollarSign, Award, ArrowRight } from 'lucide-react';
+import { BookOpen, BarChart2, CheckSquare, Presentation, Clock, ShieldCheck, DollarSign, Award, ArrowRight, Globe } from 'lucide-react';
 import RequestForm from '../components/Forms/RequestForm';
+import ReviewsSection from '../components/ReviewsSection';
 import { WHATSAPP_NUMBER } from '../constants';
 
 const Home: React.FC = () => {
@@ -103,6 +104,68 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Global Reach Banner */}
+      <section className="py-16 bg-gradient-to-br from-brand-700 via-brand-600 to-brand-800 relative overflow-hidden">
+        {/* Decorative globe rings */}
+        <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full border-4 border-white/10 pointer-events-none" />
+        <div className="absolute -right-8 -top-8 w-56 h-56 rounded-full border-4 border-white/10 pointer-events-none" />
+        <div className="absolute -left-16 -bottom-16 w-64 h-64 rounded-full border-4 border-white/10 pointer-events-none" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-10">
+            {/* Icon + Headline */}
+            <div className="flex-shrink-0 text-center lg:text-left">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/15 mb-4">
+                <Globe className="text-white" size={44} strokeWidth={1.5} />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                We Work With Students
+                <br />
+                <span className="text-brand-200">Across the Globe 🌍</span>
+              </h2>
+              <p className="mt-3 text-brand-100 text-lg max-w-md">
+                No matter where you are in the world, Research Mate is here to help you succeed academically. We accept projects and assignment requests from students in every country — fully remote, fully confidential.
+              </p>
+            </div>
+
+            {/* Divider */}
+            <div className="hidden lg:block w-px h-40 bg-white/20 flex-shrink-0" />
+
+            {/* Regions grid */}
+            <div className="flex-1">
+              <p className="text-brand-200 text-sm font-semibold uppercase tracking-widest mb-5 text-center lg:text-left">Students we currently serve include those from</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {[
+                  { code: 'gh', region: 'West Africa' },
+                  { code: 'ke', region: 'East Africa' },
+                  { code: 'za', region: 'Southern Africa' },
+                  { code: 'gb', region: 'United Kingdom' },
+                  { code: 'us', region: 'United States' },
+                  { code: 'ca', region: 'Canada' },
+                  { code: 'au', region: 'Australia' },
+                  { code: 'eu', region: 'Europe' },
+                  { code: 'in', region: 'Asia & Beyond' },
+                ].map(({ code, region }) => (
+                  <div key={region} className="flex items-center gap-2.5 bg-white/10 hover:bg-white/20 transition-colors rounded-lg px-4 py-2.5">
+                    <img
+                      src={`https://flagcdn.com/w40/${code}.png`}
+                      srcSet={`https://flagcdn.com/w80/${code}.png 2x`}
+                      width={24}
+                      height={16}
+                      alt={region}
+                      className="rounded-sm shadow-sm object-cover flex-shrink-0"
+                      style={{ width: 24, height: 16 }}
+                    />
+                    <span className="text-white font-medium text-sm">{region}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-5 text-brand-200 text-sm italic text-center lg:text-left">…and many more. If you can read this, we can help you. ✅</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Preview */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -196,6 +259,9 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Reviews */}
+      <ReviewsSection />
     </div>
   );
 };
