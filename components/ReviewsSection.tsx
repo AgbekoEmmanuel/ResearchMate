@@ -6,11 +6,46 @@ import { Star, Send, MessageSquare, Loader2, CheckCircle2 } from 'lucide-react';
 interface Review {
   id: string;
   name: string;
+  country: string;
   school: string;
   rating: number;
   message: string;
   createdAt: Timestamp | null;
 }
+
+const COUNTRIES = [
+  'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda',
+  'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain',
+  'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+  'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria',
+  'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada',
+  'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros',
+  'Congo (Brazzaville)', 'Congo (Kinshasa)', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus',
+  'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador',
+  'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini',
+  'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany',
+  'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana',
+  'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq',
+  'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya',
+  'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho',
+  'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar',
+  'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania',
+  'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro',
+  'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands',
+  'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'North Macedonia',
+  'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea',
+  'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania',
+  'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia',
+  'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe',
+  'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore',
+  'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea',
+  'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland',
+  'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo',
+  'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu',
+  'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States',
+  'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam',
+  'Yemen', 'Zambia', 'Zimbabwe',
+];
 
 const StarPicker: React.FC<{ value: number; onChange: (v: number) => void }> = ({ value, onChange }) => {
   const [hovered, setHovered] = useState(0);
@@ -93,7 +128,11 @@ const ReviewCard: React.FC<{ review: Review }> = ({ review }) => {
         </div>
         <div>
           <p className="font-semibold text-dark-900 text-sm">{review.name}</p>
-          {review.school && <p className="text-xs text-gray-400">{review.school}</p>}
+          {(review.school || review.country) && (
+            <p className="text-xs text-gray-400">
+              {[review.school, review.country].filter(Boolean).join(' · ')}
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -107,7 +146,7 @@ const ReviewsSection: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
-  const [form, setForm] = useState({ name: '', school: '', rating: 0, message: '' });
+  const [form, setForm] = useState({ name: '', country: '', school: '', rating: 0, message: '' });
 
   // Subscribe to real-time reviews from Firestore
   useEffect(() => {
@@ -133,13 +172,14 @@ const ReviewsSection: React.FC = () => {
     try {
       await addDoc(collection(db, 'reviews'), {
         name: form.name.trim(),
+        country: form.country,
         school: form.school.trim(),
         rating: form.rating,
         message: form.message.trim(),
         createdAt: serverTimestamp(),
       });
       setSubmitted(true);
-      setForm({ name: '', school: '', rating: 0, message: '' });
+      setForm({ name: '', country: '', school: '', rating: 0, message: '' });
       setTimeout(() => setSubmitted(false), 5000);
     } catch {
       setError('Something went wrong. Please try again.');
@@ -221,6 +261,22 @@ const ReviewsSection: React.FC = () => {
                       className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-sm"
                       maxLength={60}
                     />
+                  </div>
+
+                  {/* Country */}
+                  <div>
+                    <label className="block text-sm font-medium text-dark-700 mb-1">Country <span className="text-gray-400 font-normal">(optional)</span></label>
+                    <select
+                      value={form.country}
+                      onChange={(e) => setForm({ ...form, country: e.target.value })}
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-sm bg-white text-dark-800 appearance-none cursor-pointer"
+                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                    >
+                      <option value="">Select your country…</option>
+                      {COUNTRIES.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
                   </div>
 
                   {/* School */}
