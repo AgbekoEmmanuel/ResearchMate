@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, BarChart2, CheckSquare, Presentation, Clock, ShieldCheck, DollarSign, Award, ArrowRight, Globe } from 'lucide-react';
 import RequestForm from '../components/Forms/RequestForm';
-import ReviewsSection from '../components/ReviewsSection';
+
 import StarBorder from '../components/StarBorder';
 import { WHATSAPP_NUMBER } from '../constants';
 
@@ -292,8 +292,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Reviews */}
-      <ReviewsSection />
+
     </div>
   );
 };
